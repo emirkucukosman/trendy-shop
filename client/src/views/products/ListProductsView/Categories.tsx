@@ -56,7 +56,7 @@ const Categories: React.FC<CategoriesProps> = ({ className }) => {
   };
 
   return (
-    <div className={`hidden bg-gray-200 p-6 lg:block ${className}`}>
+    <div className={`hidden shadow-md rounded-md p-6 lg:block ${className}`}>
       <h1 className="text-2xl">Categories</h1>
       <div className="flex flex-col items-start mt-8 space-y-3">
         {categories.map((category, i) => (

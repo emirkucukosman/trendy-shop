@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useReduxDispatch, useReduxSelector } from "src/app/hook";
 import { fetchAllProducts, selectCategoryFilter } from "src/slices/productSlice";
 import { useHistory } from "react-router-dom";
-import { BiFilter } from "react-icons/bi";
 
 const brands = [
   {
@@ -10,16 +9,36 @@ const brands = [
     slug: "apple",
   },
   {
-    title: "Microsoft",
-    slug: "microsoft",
+    title: "Beats",
+    slug: "beats",
   },
   {
-    title: "Beats",
-    slug: "Beats",
+    title: "Chanel",
+    slug: "chanel",
+  },
+  {
+    title: "Gucci",
+    slug: "gucci",
+  },
+  {
+    title: "Herschel",
+    slug: "herschel",
   },
   {
     title: "Louis Vuitton",
     slug: "louis-vuitton",
+  },
+  {
+    title: "Microsoft",
+    slug: "microsoft",
+  },
+  {
+    title: "Nike",
+    slug: "nike",
+  },
+  {
+    title: "Under Armour",
+    slug: "under-armour",
   },
 ];
 
@@ -27,54 +46,42 @@ type BrandsProps = {
   className?: string;
 };
 
+const filteredBrands: any[] = [];
+
 const Brands: React.FC<BrandsProps> = ({ className }) => {
-  const [toggledBrands, setToggledBrands] = useState(Array(brands.length).fill(false));
   const history = useHistory();
   const dispatch = useReduxDispatch();
   const categoryFilter = useReduxSelector(selectCategoryFilter);
 
-  const handleApplyFilterClick = () => {
-    const filteredBrands = [];
-    for (let i = 0; i < toggledBrands.length; i++) {
-      if (toggledBrands[i]) filteredBrands.push(brands[i].title);
+  const handleBrandToggle = (event: any) => {
+    if (event.target.checked) {
+      filteredBrands.push(event.target.name);
+    } else {
+      const index = filteredBrands.indexOf(event.target.name);
+      if (index > -1) {
+        filteredBrands.splice(index, 1);
+      }
     }
-    if (filteredBrands.length !== 0) {
-      history.push(`?brands=${filteredBrands.join(",")}`);
-      return dispatch(fetchAllProducts({ category: categoryFilter, brands: filteredBrands }));
-    }
-    history.push(`/`);
-    dispatch(fetchAllProducts({ category: categoryFilter }));
-  };
 
-  const handleBrandToggle = (index: number) => {
-    const brandCopies = [...toggledBrands];
-    brandCopies[index] = !brandCopies[index];
-    setToggledBrands(brandCopies);
+    if (filteredBrands.length === 0) {
+      categoryFilter ? history.push(`/${categoryFilter}`) : history.push(`/`);
+      dispatch(fetchAllProducts({ category: categoryFilter }));
+    } else {
+      history.push(`?brands=${filteredBrands.join(",")}`);
+      dispatch(fetchAllProducts({ category: categoryFilter, brands: filteredBrands }));
+    }
   };
 
   return (
-    <div className={`hidden bg-gray-200 w-full p-6 lg:block ${className}`}>
+    <div className={`hidden shadow-md rounded-md w-full p-6 mt-8 lg:block ${className}`}>
       <h1 className="text-2xl">Brands</h1>
       <div className="flex flex-col items-start mt-8">
         {brands.map((brand, i) => (
           <div className="flex items-center space-x-2 text-gray-500 mb-3" key={i}>
-            <input
-              type="checkbox"
-              checked={toggledBrands[i]}
-              onChange={() => handleBrandToggle(i)}
-            />
+            <input type="checkbox" name={brand.title} onChange={handleBrandToggle} />
             <span>{brand.title}</span>
           </div>
         ))}
-        <div className="mt-3">
-          <button
-            className="flex items-center space-x-2 bg-gray-800 rounded-md px-4 py-2 text-white border-none transition duration-200 hover:bg-gray-900 focus:outline-none"
-            onClick={handleApplyFilterClick}
-          >
-            <BiFilter size={24} />
-            <span>Apply</span>
-          </button>
-        </div>
       </div>
     </div>
   );

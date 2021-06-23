@@ -10,11 +10,14 @@ type ProductCardProps = {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div className="flex flex-col items-start">
-      <Link to={`/product/${product.title.toLowerCase().replaceAll(" ", "-")}`} className="w-full">
+      <Link
+        to={`/product/${product.title.toLowerCase().replaceAll(" ", "-")}`}
+        className="w-full"
+      >
         <div className="flex justify-center w-full">
           <img
             src={product.image}
-            alt="iphone"
+            alt={product.slug}
             className="h-64 cursor-pointer transform transition duration-200 hover:scale-105"
           />
         </div>

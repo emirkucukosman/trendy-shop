@@ -13,7 +13,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
   handleLayoutChange,
 }) => {
   return (
-    <div className="bg-gray-200 w-full p-4">
+    <div className="shadow-md rounded-md w-full p-4">
       <div className="flex items-center justify-between">
         <div>
           <span className="font-bold">{productsCount}</span> <span>Products found</span>

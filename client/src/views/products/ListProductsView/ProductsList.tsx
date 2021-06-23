@@ -1,16 +1,16 @@
 import React from "react";
 import { useReduxSelector } from "src/app/hook";
-import LoadingScreen from "src/components/LoadingScreen";
 import { selectProducts, selectProductsStatus } from "src/slices/productSlice";
 import { BsFillStarFill, BsStar } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import ListProductsLoading from "src/components/ListProductsLoading";
 
 const ProductsList = () => {
   const products = useReduxSelector(selectProducts);
   const productsStatus = useReduxSelector(selectProductsStatus);
 
   if (productsStatus === "loading") {
-    return <LoadingScreen />;
+    return <ListProductsLoading />;
   }
 
   return (

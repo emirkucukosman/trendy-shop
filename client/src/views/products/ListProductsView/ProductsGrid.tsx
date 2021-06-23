@@ -2,14 +2,14 @@ import React from "react";
 import { useReduxSelector } from "src/app/hook";
 import { selectProducts, selectProductsStatus } from "src/slices/productSlice";
 import ProductCard from "./ProductCard";
-import LoadingScreen from "src/components/LoadingScreen";
+import GridProductsLoading from "src/components/GridProductsLoading";
 
 const ProductsGrid = () => {
   const products = useReduxSelector(selectProducts);
   const productsStatus = useReduxSelector(selectProductsStatus);
 
   if (productsStatus === "loading") {
-    return <LoadingScreen />;
+    return <GridProductsLoading />;
   }
 
   return (

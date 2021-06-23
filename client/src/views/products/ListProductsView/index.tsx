@@ -29,7 +29,7 @@ const ListProductsView = () => {
       <div className="flex lg:space-x-8">
         <div className="hidden lg:flex lg:flex-col lg:items-start">
           <Categories />
-          <Brands className="mt-8" />
+          <Brands />
         </div>
         <div className="flex flex-col w-full lg:w-4/5">
           <Toolbar
